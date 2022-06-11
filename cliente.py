@@ -22,9 +22,25 @@ class Clientes:
             conn = dbConnect.DbConnect.conn(self)
             cursor = conn.cursor()
 
-            comando = f'SELECT nome FROM clientes WHERE cpf="{cpf_cliente}"'
+            comando = f'SELECT nome, cpf FROM clientes WHERE cpf="{cpf_cliente}"'
             cursor.execute(comando)
             res = cursor.fetchone()
+
+            cursor.close()
+            conn.close()
+
+            return res
+        except:
+            print("Não foi possível recuperar os dados do cliente.")
+
+    def getClients(self):
+        try:
+            conn = dbConnect.DbConnect.conn(self)
+            cursor = conn.cursor()
+
+            comando = 'SELECT nome, cpf FROM clientes'
+            cursor.execute(comando)
+            res = cursor.fetchall()
 
             cursor.close()
             conn.close()

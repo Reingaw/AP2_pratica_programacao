@@ -2,6 +2,10 @@ import dbConnect
 
 
 class Venda:
+
+    def __init__(self):
+        self.over = 0
+
     def setSale(self, id_cliente, total):
         try:
             conn = dbConnect.DbConnect.conn(self)
@@ -44,3 +48,6 @@ class Venda:
             conn.commit()
         except:
             print("Não foi possível salvar os dados dos items do carrinho.")
+
+    def Over(self):
+        self.over = 1

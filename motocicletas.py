@@ -8,7 +8,9 @@ class Motocicletas:
             conn = dbConnect.DbConnect.conn(self)
             cursor = conn.cursor()
 
-            comando = f'INSERT INTO motocicletas (modelo, marca, preco) VALUES ("{modelo}", "{marca}", {preco})'
+            comando = f'INSERT INTO motocicletas ' \
+                      f'(modelo, marca, preco) VALUES' \
+                      f'("{modelo}", "{marca}", {preco})'
             cursor.execute(comando)
             conn.commit()
 
@@ -17,12 +19,12 @@ class Motocicletas:
         except:
             print("Não foi possível salvar os dados da motocicleta.")
 
-    def getMoto(self, modelo):
+    def getMoto(self, id):
         try:
             conn = dbConnect.DbConnect.conn(self)
             cursor = conn.cursor()
 
-            comando = f'SELECT nome FROM motocicletas WHERE modelo="{modelo}"'
+            comando = f'SELECT modelo, marca, preco FROM motocicletas WHERE id={id}'
             cursor.execute(comando)
             res = cursor.fetchone()
 
@@ -32,6 +34,23 @@ class Motocicletas:
             return res
         except:
             print("Não foi possível recuperar os dados da motocicleta.")
+
+    def getAllMotos(self):
+        try:
+            conn = dbConnect.DbConnect.conn(self)
+            cursor = conn.cursor()
+
+            comando = f'SELECT id, modelo, marca, preco FROM motocicletas'
+            cursor.execute(comando)
+            res = cursor.fetchall()
+
+            cursor.close()
+            conn.close()
+
+            return res
+        except:
+            print("Não foi possível recuperar os dados da motocicleta.")
+
 
     def updateMoto(self, id_moto, modelo, marca, preco):
         try:
